@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<navbar class="h-15 font-semibold text-center items-center">
+  <div class="flex justify-between items-center navbar bg-neu-50 rounded-t-lg shadow-xl border-b-4 border-indigo-500">
+    <!--<div class=" py-1 m-3 indicator">
+      <h4 class="text-preto-50">Wellcome</h4>
+    </div> -->
+    <div class="m-3 ">
+      <a class="indicator text-indigo-700 ">
+        Things Todo:  
+        <span class="font-extralight badge"> {{tasks|length}}</span>
+      </a> 
+    </div>
+    <div class="m-3 ">
+
+    </div>
+    
+
+    <div class="m-3">
+        <label for="my-modal" class="bg-indigo-500 hover:bg-indigo-600 border-none btn modal-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.6" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>          
+        </label>
+    </div>
+  </div>
+
+ 
+</navbar>
+
+
+
+
+<div class="mt-5 h-full">
+ <!-- <div class="container mx-auto h-82">
+      <form action="/" method="POST">
+          <input class="input input-bordered input-md w-full max-w-xs" type="text" placeholder="todo" name="content" id="content" maxlength="30">
+          <input value="Add Task" type="submit"class="btn">
+      </form>
+  </div>
+
+
+ Put this part before </body> tag -->
+<input type="checkbox" id="my-modal" class="modal-toggle" />
+<div class="modal">
+  
+  <form action="/" method="POST">
+    <div class="modal-box w-screen max-w-1xl h-1/2 maxh-1xl grid justify-center items-center">
+
+      <div class="m-3 w-full">
+        <h3>Title</h3>
+        <input class="input input-bordered input-md w-full max-w-xs" type="text" placeholder="" name="title" id="title" maxlength="30">
+
+      </div>
+      <div class="m-3 top-3">
+
+        <h3>Note</h3>
+        <textarea style="resize: none;" rows="2" cols="30" class="input input-bordered input-md w-96 max-w-xs h-44" type="text" placeholder="" name="content" id="content" maxlength="100"></textarea>
+
+      </div >
+      
+        <div class="modal-action">
+        <label for="my-modal" class="btn btn-ghost text-red-700 hover:bg-neu-100 ">Cancel</label>
+
+        <input for="my-modal" value="Add Task" type="submit" class="btn bg-indigo-500 border-indigo-500 hover:bg-indigo-600">
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<!-- ================== -->
+
+<div class="scrollbar-hide container mx-auto h-full w-full overflow-y-auto bg-neu-50 shadow-xl">
+  <div class="m-2 p-2 grid grid-cols-2 gap-5">
+
+    {% for task in tasks %}
+      <div class=" bg-neu-100 text-black w-full flex flex-col rounded-xl shadow-md p-1">
+        <div class="flex items-center justify-between">
+
+          <div class="flex items-center space-x-4 m-1 ml-6">
+            <div class="text-md font-bold">{{ task.title }}</div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="text-neu-900 cursor-pointer">
+              <a class="btn btn-square btn-ghost border-0" href="update/{{task.id}}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                </svg>
+              </a>
+            </div>
+            <div class="text-neu-900  cursor-pointer">
+              <a class="btn btn-square btn-ghost border-0" href="delete/{{task.id}}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="m-4 ml-6 font-normal text-neu-400 text-sm flex justify-between">
+          <p style="overflow-wrap: break-word; word-wrap: break-word;word-break: break-word;">{{ task.content }}</p>
+
+        </div>
+        
+        <!-- DUE DATA and USER -->
+        <div class="m-4 ml-6 font-normal  text-sm flex justify-between">
+          <div class="flex justify-center items-center text-indigo-600">
+
+       
+            <div class="badge badge-sm badge-secondary">new</div>
+
+          </div>
+
+          <div class="flex justify-center items-center">
+            <div class="dropdown dropdown-end">
+
+              <label tabindex="0" class="btn btn-circle btn-ghost btn-xs text-neu-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>        
+              </label>
+              <div tabindex="0" class="card compact dropdown-content shadow bg-neu-50 rounded-box w-72">
+                <div class="card-body">
+                  <h2 class="card-title">More info</h2> 
+                  <p class="text-clip font-light font-sans">Create: {{task.dtainc}}</p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+      </div>
+    {% endfor %}
+    
+  </div>
+</div>
+
+
+
+
+
+<!-- <div class="w-full h-full">
+  <div class="absolute -bottom-10 right-0 mr-8 mb-32 ">
+      <div class="bg-white rounded-lg shadow-md px-4 py-2 border-1 border-gray-400">
+          Was this doc helpful to you?
+         
+      </div>
+  </div>
+</div> -->
+
+{% endblock %}
