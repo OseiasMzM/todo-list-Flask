@@ -3,12 +3,25 @@
 {% extends 'index.html' %}
 {% block body %}
 
-<div class="content">
-    <h1>Update Task</h1>
-    <form action="/update/{{task.id}}" method="POST">
-        <input type="text" name="content" id="content" value="{{task.content}}">
-        <input type="submit" value="Update">
-    </form>
-</div>
+<form action="/update/{{task.id}}" method="POST">
+    <div class="w-screen max-w-1xl h-1/2 maxh-1xl grid justify-center items-center">
+        <div class="grid justify-center items-center w-full">
+            <div class="w-full h-full ">
+                <p class="font-sans font-normal text-2xl">Title</p>
+                <!-- <input type="text" name="titlecontent" id="titlecontent" value="{{task.title}}"> -->
+                <input type="text" placeholder="" name="titlecontent" id="titlecontent" maxlength="30" class="input input-bordered input-md w-full max-w-xs">
+
+            </div>
+            <div class="w-full h-full">
+                <p class="font-sans font-norma text-2xl">Note</p>
+                <textarea type="text" name="content" id="content" value="{{task.content}}" class="input input-bordered input-md w-96 max-w-xs h-44 resize-none rounded-md"></textarea>
+            </div >
+            <div class="">
+                <input type="submit" value="Update" class="btn bg-esmeralda-500 border-esmeralda-500 hover:bg-esmeralda-600 hover:border-esmeralda-600">
+            </div>
+        </div>
+    </div>
+</form>            
+
 
 {% endblock %}

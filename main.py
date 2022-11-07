@@ -13,16 +13,13 @@ db = SQLAlchemy(app)
 
 
 class Todo(db.Model):
-    # cmd: python
-    # from app import db
-    # db.create_all()
-    # exit()
+
     
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=False)
     content = db.Column(db.String(300), nullable=False)
     dtainc = db.Column(db.String(25), nullable=False)
-    
+    dtaatt = db.Column(db.String(25), nullable=False)
 
     def __rep__(self):
         return '<Task %r>' % self.id
@@ -32,18 +29,21 @@ class Todo(db.Model):
 def home():
     # return render_template("index.html")
     if request.method == 'POST':
+        print("Adicionando...")
         task_title = request.form['title']
         task_content = request.form['content']
         
         hora = datetime.today().strftime('%d-%m-%Y %H:%M')
+        atualizacao = '' 
         #hora = datetime.today().strftime('%Y-%m-%d')
         
-        new_task = Todo(title=task_title,content=task_content, dtainc=hora)
-
+        new_task = Todo(title=task_title,content=task_content, dtainc=hora, dtaatt = atualizacao)
+        
         try:
             db.session.add(new_task)
             db.session.commit()
             return redirect('/')
+            print("Task adicionada!")
 
         except:
             return "There was an error while adding the task"
@@ -57,23 +57,33 @@ def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
     try:
         db.session.delete(task_to_delete)
+        print("Task deletada!")
         db.session.commit()
         return redirect('/')
+        
+
     except:
         return 'There was an error while deleting that task'
 
 
+    
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Todo.query.get_or_404(id)
 
     if request.method == 'POST':
-
+        
+        task.title = request.form['titlecontent']
         task.content = request.form['content']
+        task.dtaatt = datetime.today().strftime('%d-%m-%Y %H:%M')
+
 
         try:
+            print("Task atualizada!")
             db.session.commit()
             return redirect('/')
+           
+
         except:
             return 'There was an issue while updating that task'
     else:

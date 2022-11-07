@@ -20,6 +20,11 @@ module.exports = {
         'preto': {
           50: '#000000'
         },
+        'yellow': {
+          300: '#fde047',
+          400: '#facc15',
+          500: '#eab308'
+        },
         'neu': {
           50:  '#fafafa',
           100: '#f5f5f5',
